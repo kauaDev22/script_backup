@@ -43,6 +43,15 @@ tar -zcvf \$DESTINO/\$DATA-$SERVIDOR.\$NOME_SERVIDOR.tgz /backups/$SERVIDOR >> \
 AGORA=\$(date +%d/%m-%H:%M)
 echo "\\n Cópia do diretório backups/$SERVIDOR encerrada \$AGORA" >> \$ARQLOG
 
+# BACKUP DO MYSQL (todos os bancos de dados)
+AGORA=\$(date +%d/%m-%H:%M)
+echo "\\n Início do backup do MySQL para \$SERVIDOR ..... \$AGORA" >> \$ARQLOG
+
+mysqldump --user=root --password=alunos --all-databases > \$DESTINO/\$DATA.bkp-bases.\$NOME_SERVIDOR.sql >> \$ARQLOG 2>> \$ARQLOG
+
+AGORA=\$(date +%d/%m-%H:%M)
+echo "\\n Backup do MySQL encerrado para \$SERVIDOR ..... \$AGORA" >> \$ARQLOG
+
 # Desmonta o NFS
 umount /nfs
 EOF
